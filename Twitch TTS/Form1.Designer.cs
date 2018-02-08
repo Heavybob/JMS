@@ -74,6 +74,7 @@
             this.chatCommandBox.Name = "chatCommandBox";
             this.chatCommandBox.Size = new System.Drawing.Size(432, 20);
             this.chatCommandBox.TabIndex = 1;
+            this.chatCommandBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChatCommandBox_KeyDown);
             // 
             // label1
             // 
@@ -90,7 +91,7 @@
             this.sendCommandButton.Name = "sendCommandButton";
             this.sendCommandButton.Size = new System.Drawing.Size(75, 23);
             this.sendCommandButton.TabIndex = 3;
-            this.sendCommandButton.Text = "Send";
+            this.sendCommandButton.Text = "Say";
             this.sendCommandButton.UseVisualStyleBackColor = true;
             this.sendCommandButton.Click += new System.EventHandler(this.SendCommandButton_Click);
             // 

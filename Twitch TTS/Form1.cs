@@ -17,6 +17,7 @@ using TwitchLib.Models.Client;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using CSCore.Streams;
 
 namespace Twitch_TTS
 {
@@ -60,7 +61,8 @@ namespace Twitch_TTS
             @"\[:comma([^\]]+)\]",
             @"\[:period([^\]]+)\]",
             @"((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)",
-            @"\[:dial\]"
+            @"\[:dial\]",
+            @"\[:(?:tone|t)\]"
         };
 
         public bool playNext = true;
@@ -115,9 +117,24 @@ namespace Twitch_TTS
 
         private void SendCommandButton_Click(object sender, EventArgs e)
         {
-            client.SendMessage(chatCommandBox.Text);
+            //client.SendMessage(chatCommandBox.Text);
+            string text = chatCommandBox.Text;
             AddChat(chatCommandBox.Text);
             chatCommandBox.Text = "";
+            new Thread(delegate () { TTS(text); }).Start();
+        }
+
+        private void ChatCommandBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string text = chatCommandBox.Text;
+                AddChat(chatCommandBox.Text);
+                chatCommandBox.Text = "";
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                new Thread(delegate () { TTS(text); }).Start();
+            }
         }
 
         private void AddChat(string text)
@@ -365,9 +382,11 @@ namespace Twitch_TTS
             if (lastChatMessage != currentMessage)
             {
                 lastChatMessage = currentMessage;
+                Regex rgx;
+
                 foreach (string s in regexPattern)
                 {
-                    Regex rgx = new Regex(s);
+                    rgx = new Regex(s);
                     currentMessage = rgx.Replace(currentMessage, "");
                 }
 
@@ -378,30 +397,83 @@ namespace Twitch_TTS
 
                 if (!dialToneCheckBox.Checked)
                 {
-                    Regex rgx = new Regex(@"\[:dial([^\]]+)\]");
+                    rgx = new Regex(@"\[:dial([^\]]+)\]");
                     currentMessage = rgx.Replace(currentMessage, "");
                 }
 
-                using (FonixTalkEngine tts = new FonixTalkEngine())
+                rgx = new Regex(@"(\[:(?:tone|t)\b[^\]]+\])");
+                string[] splitMessages = rgx.Split(currentMessage);
+                for (int x = 0; x < splitMessages.Length; x++)
                 {
-                    tts.Voice = (TtsVoice) GetVoiceID();
-                    byte[] ttsArray = Generate(tts.SpeakToMemory(currentMessage));
-
-                    using (MemoryStream wavStream = new MemoryStream(ttsArray))
+                    rgx = new Regex(@"\[:(?:tone|t)\b([^\]]+)\]");
+                    var match = rgx.Match(splitMessages[x]);
+                    if (match.Success)
                     {
-                        using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
+                        int frequency = 0;
+                        int milis = 0;
+                        string[] values = match.Groups[1].ToString().Substring(1).Split(',');
+                        if (values.Length > 1)
                         {
-                            using (var waveSource = new CSCore.Codecs.RAW.RawDataReader(wavStream, new WaveFormat(11025, 16, 1)))
+                            Int32.TryParse(values[0], out frequency);
+                            Int32.TryParse(values[1], out milis);
+                        }
+
+                        if (frequency != 0 && milis != 0)
+                        {
+                            byte[] ttsArray = GenerateSine(frequency, milis);
+                            using (MemoryStream wavStream = new MemoryStream(ttsArray))
                             {
-                                waveOut.Initialize(waveSource);
-                                waveOut.Play();
-                                ttsWavs.Add(waveOut);
-                                waveOut.WaitForStopped();
+                                try
+                                {
+                                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
+                                    {
+                                        using (var waveSource = new CSCore.Codecs.RAW.RawDataReader(wavStream, new WaveFormat(44100, 16, 1)))
+                                        {
+                                            waveOut.Initialize(waveSource);
+                                            waveOut.Play();
+                                            ttsWavs.Add(waveOut);
+                                            waveOut.WaitForStopped();
+                                        }
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        using (FonixTalkEngine tts = new FonixTalkEngine())
+                        {
+                            tts.Voice = (TtsVoice)GetVoiceID();
+                            byte[] ttsArray = Generate(tts.SpeakToMemory(splitMessages[x]));
+                            using (MemoryStream wavStream = new MemoryStream(ttsArray))
+                            {
+                                try
+                                {
+                                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
+                                    {
+                                        using (var waveSource = new CSCore.Codecs.RAW.RawDataReader(wavStream, new WaveFormat(11025, 16, 1)))
+                                        {
+                                            waveOut.Initialize(waveSource);
+                                            waveOut.Play();
+                                            ttsWavs.Add(waveOut);
+                                            waveOut.WaitForStopped();
+                                        }
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+
+                                }
                             }
                         }
                     }
                 }
             }
+
             if (GetChatModeID() == 1 && queuedMessage.Length > 0)
             {
                 string input = queuedMessage;
@@ -442,6 +514,46 @@ namespace Twitch_TTS
             wavStream.AddRange(Encoding.ASCII.GetBytes("data"));
             wavStream.AddRange(BitConverter.GetBytes(sizeInBytes));
             wavStream.AddRange(input);
+            return wavStream.ToArray();
+        }
+
+        public static byte[] GenerateSine(int frequency, int msDuration, UInt16 volume = 16383)
+        {
+            List<byte> wavStream = new List<byte>();
+
+            const int headerSize = 44;
+            const int formatChunkSize = 16;
+            const short waveAudioFormat = 1;
+            const short numChannels = 1;
+            const int sampleRate = 44100;
+            const short bitsPerSample = 16;
+            const int byteRate = (numChannels * bitsPerSample * sampleRate) / 8;
+            const short blockAlign = numChannels * bitsPerSample / 8;
+            int samples = sampleRate * msDuration / 1000;
+            var sizeInBytes = samples * byteRate;
+
+            wavStream.AddRange(Encoding.ASCII.GetBytes("RIFF"));
+            wavStream.AddRange(BitConverter.GetBytes(sizeInBytes + headerSize - 8));
+            wavStream.AddRange(Encoding.ASCII.GetBytes("WAVE"));
+            wavStream.AddRange(Encoding.ASCII.GetBytes("fmt "));
+            wavStream.AddRange(BitConverter.GetBytes(formatChunkSize));
+            wavStream.AddRange(BitConverter.GetBytes(waveAudioFormat));
+            wavStream.AddRange(BitConverter.GetBytes(numChannels));
+            wavStream.AddRange(BitConverter.GetBytes(sampleRate));
+            wavStream.AddRange(BitConverter.GetBytes(byteRate));
+            wavStream.AddRange(BitConverter.GetBytes(blockAlign));
+            wavStream.AddRange(BitConverter.GetBytes(bitsPerSample));
+            wavStream.AddRange(Encoding.ASCII.GetBytes("data"));
+            wavStream.AddRange(BitConverter.GetBytes(sizeInBytes));
+            {
+                double theta = (Math.PI * 2 * frequency) / (sampleRate * numChannels);
+                double amp = volume >> 2;
+                for (int i = 0; i < samples; i++)
+                {
+                    short s = Convert.ToInt16(amp * Math.Sin(theta * i));
+                    wavStream.AddRange(BitConverter.GetBytes(s));
+                }
+            }
             return wavStream.ToArray();
         }
 
