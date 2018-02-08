@@ -18,6 +18,8 @@ using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using CSCore.Streams;
+using CSCore.Codecs.WAV;
+using CSCore.Codecs.RAW;
 
 namespace Twitch_TTS
 {
@@ -383,6 +385,7 @@ namespace Twitch_TTS
             {
                 lastChatMessage = currentMessage;
                 Regex rgx;
+                List<byte> ttsArray = new List<byte>();
 
                 foreach (string s in regexPattern)
                 {
@@ -401,17 +404,17 @@ namespace Twitch_TTS
                     currentMessage = rgx.Replace(currentMessage, "");
                 }
 
-                rgx = new Regex(@"(\[:(?:tone|t)\b[^\]]+\])");
+                rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
                 string[] splitMessages = rgx.Split(currentMessage);
-                for (int x = 0; x < splitMessages.Length; x++)
+                foreach (string message in splitMessages)
                 {
-                    rgx = new Regex(@"\[:(?:tone|t)\b([^\]]+)\]");
-                    var match = rgx.Match(splitMessages[x]);
+                    rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
+                    var match = rgx.Match(message);
                     if (match.Success)
                     {
                         int frequency = 0;
                         int milis = 0;
-                        string[] values = match.Groups[1].ToString().Substring(1).Split(',');
+                        string[] values = match.Groups[1].ToString().Split(',');
                         if (values.Length > 1)
                         {
                             Int32.TryParse(values[0], out frequency);
@@ -420,27 +423,7 @@ namespace Twitch_TTS
 
                         if (frequency != 0 && milis != 0)
                         {
-                            byte[] ttsArray = GenerateSine(frequency, milis);
-                            using (MemoryStream wavStream = new MemoryStream(ttsArray))
-                            {
-                                try
-                                {
-                                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
-                                    {
-                                        using (var waveSource = new CSCore.Codecs.RAW.RawDataReader(wavStream, new WaveFormat(44100, 16, 1)))
-                                        {
-                                            waveOut.Initialize(waveSource);
-                                            waveOut.Play();
-                                            ttsWavs.Add(waveOut);
-                                            waveOut.WaitForStopped();
-                                        }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-
-                                }
-                            }
+                            ttsArray.AddRange(GenerateSine(frequency, milis));
                         }
                     }
                     else
@@ -448,28 +431,29 @@ namespace Twitch_TTS
                         using (FonixTalkEngine tts = new FonixTalkEngine())
                         {
                             tts.Voice = (TtsVoice)GetVoiceID();
-                            byte[] ttsArray = Generate(tts.SpeakToMemory(splitMessages[x]));
-                            using (MemoryStream wavStream = new MemoryStream(ttsArray))
-                            {
-                                try
-                                {
-                                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
-                                    {
-                                        using (var waveSource = new CSCore.Codecs.RAW.RawDataReader(wavStream, new WaveFormat(11025, 16, 1)))
-                                        {
-                                            waveOut.Initialize(waveSource);
-                                            waveOut.Play();
-                                            ttsWavs.Add(waveOut);
-                                            waveOut.WaitForStopped();
-                                        }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
+                            ttsArray.AddRange(tts.SpeakToMemory(message));
+                        }
+                    }
+                }
 
-                                }
+                using (MemoryStream wavStream = new MemoryStream(Generate(ttsArray.ToArray())))
+                {
+                    try
+                    {
+                        using (var waveOut = new WaveOut { Device = new WaveOutDevice(GetDeviceID()) })
+                        {
+                            using (var waveSource = new RawDataReader(wavStream, new WaveFormat(11025, 16, 1)))
+                            {
+                                waveOut.Initialize(waveSource);
+                                waveOut.Play();
+                                ttsWavs.Add(waveOut);
+                                waveOut.WaitForStopped();
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+
                     }
                 }
             }
@@ -521,39 +505,21 @@ namespace Twitch_TTS
         {
             List<byte> wavStream = new List<byte>();
 
-            const int headerSize = 44;
-            const int formatChunkSize = 16;
-            const short waveAudioFormat = 1;
             const short numChannels = 1;
-            const int sampleRate = 44100;
+            const int sampleRate = 11025;
             const short bitsPerSample = 16;
             const int byteRate = (numChannels * bitsPerSample * sampleRate) / 8;
-            const short blockAlign = numChannels * bitsPerSample / 8;
             int samples = sampleRate * msDuration / 1000;
             var sizeInBytes = samples * byteRate;
-
-            wavStream.AddRange(Encoding.ASCII.GetBytes("RIFF"));
-            wavStream.AddRange(BitConverter.GetBytes(sizeInBytes + headerSize - 8));
-            wavStream.AddRange(Encoding.ASCII.GetBytes("WAVE"));
-            wavStream.AddRange(Encoding.ASCII.GetBytes("fmt "));
-            wavStream.AddRange(BitConverter.GetBytes(formatChunkSize));
-            wavStream.AddRange(BitConverter.GetBytes(waveAudioFormat));
-            wavStream.AddRange(BitConverter.GetBytes(numChannels));
-            wavStream.AddRange(BitConverter.GetBytes(sampleRate));
-            wavStream.AddRange(BitConverter.GetBytes(byteRate));
-            wavStream.AddRange(BitConverter.GetBytes(blockAlign));
-            wavStream.AddRange(BitConverter.GetBytes(bitsPerSample));
-            wavStream.AddRange(Encoding.ASCII.GetBytes("data"));
-            wavStream.AddRange(BitConverter.GetBytes(sizeInBytes));
+            
+            double theta = (Math.PI * 2 * frequency) / (sampleRate * numChannels);
+            double amp = volume >> 2;
+            for (int i = 0; i < samples; i++)
             {
-                double theta = (Math.PI * 2 * frequency) / (sampleRate * numChannels);
-                double amp = volume >> 2;
-                for (int i = 0; i < samples; i++)
-                {
-                    short s = Convert.ToInt16(amp * Math.Sin(theta * i));
-                    wavStream.AddRange(BitConverter.GetBytes(s));
-                }
+                short s = Convert.ToInt16(amp * Math.Sin(theta * i));
+                wavStream.AddRange(BitConverter.GetBytes(s));
             }
+
             return wavStream.ToArray();
         }
 
