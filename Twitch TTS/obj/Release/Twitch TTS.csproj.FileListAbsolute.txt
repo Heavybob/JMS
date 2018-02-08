@@ -14,3 +14,19 @@ C:\Users\ianes\Documents\Visual Studio 2017\Projects\Twitch TTS\Twitch TTS\obj\R
 C:\Users\ianes\Documents\Visual Studio 2017\Projects\Twitch TTS\Twitch TTS\bin\Release\AlphaBlendTextBox.dll
 C:\Users\ianes\Documents\Visual Studio 2017\Projects\Twitch TTS\Twitch TTS\obj\Release\Twitch TTS.g.resources
 C:\Users\ianes\Documents\Visual Studio 2017\Projects\Twitch TTS\Twitch TTS\obj\Release\Twitch_TTS.RetroChatForm.resources
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\FonixTalk.dll
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\ftalk_us.dll
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\ftalk_us.dic
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\AlphaBlendTextBox.dll
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\Twitch TTS.exe.config
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\Twitch TTS.exe
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\bin\Release\Twitch TTS.pdb
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.csprojResolveAssemblyReference.cache
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.g.resources
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch_TTS.Form1.resources
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch_TTS.Properties.Resources.resources
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch_TTS.RetroChatForm.resources
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.csproj.GenerateResource.Cache
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.csproj.CoreCompileInputs.cache
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.exe
+C:\Users\ianes\Documents\GitHub\JMS\Twitch TTS\obj\Release\Twitch TTS.pdb

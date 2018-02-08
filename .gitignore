@@ -2,4 +2,5 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Twitch TTS/bin/Debug
+/Twitch TTS/bin/
+/Twitch TTS/obj/
