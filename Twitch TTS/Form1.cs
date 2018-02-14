@@ -20,6 +20,7 @@ using System.Drawing;
 using CSCore.Streams;
 using CSCore.Codecs.WAV;
 using CSCore.Codecs.RAW;
+using Cleverbot.Net;
 
 namespace Twitch_TTS
 {
@@ -27,6 +28,7 @@ namespace Twitch_TTS
     {
         delegate void StringArgReturningVoidDelegate(string text);
         delegate void ChatArgReturningVoidDelegate(string text, string colorHex);
+        public CleverbotSession cleverbotSession = CleverbotSession.NewSession("jOPGMvjNhM10VZIB", "AzHz9wUZbkGXjbrUIdRD7fO0chmfZPQD");
         public ConnectionCredentials credentials;
         public TwitchClient client;
         public RetroChatForm childForm;
@@ -141,14 +143,14 @@ namespace Twitch_TTS
 
         private void AddChat(string text)
         {
-            if (this.chatTextBox.InvokeRequired)
+            if (chatTextBox.InvokeRequired)
             {
                 StringArgReturningVoidDelegate d = new StringArgReturningVoidDelegate(AddChat);
-                this.Invoke(d, new object[] { text });
+                Invoke(d, new object[] { text });
             }
             else
             {
-                this.chatTextBox.AppendText(text + "\r\n");
+                chatTextBox.AppendText(text + "\r\n");
                 foreach (char c in text.ToCharArray())
                 {
                     buffer.Add(new Tuple<string, Color>(c.ToString(), Color.Empty));
@@ -160,14 +162,14 @@ namespace Twitch_TTS
 
         private void AddChat(string text, string colorHex)
         {
-            if (this.chatTextBox.InvokeRequired)
+            if (chatTextBox.InvokeRequired)
             {
                 ChatArgReturningVoidDelegate d = new ChatArgReturningVoidDelegate(AddChat);
-                this.Invoke(d, new object[] { text, colorHex });
+                Invoke(d, new object[] { text, colorHex });
             }
             else
             {
-                this.chatTextBox.AppendText(text, ColorTranslator.FromHtml(colorHex));
+                chatTextBox.AppendText(text, ColorTranslator.FromHtml(colorHex));
                 foreach(char c in text.ToCharArray())
                 {
                     buffer.Add(new Tuple<string, Color>(c.ToString(), ColorTranslator.FromHtml(colorHex)));
@@ -177,20 +179,20 @@ namespace Twitch_TTS
 
         private void SetStatus(string text)
         {
-            if (this.statusLabel.InvokeRequired)
+            if (statusLabel.InvokeRequired)
             {
                 StringArgReturningVoidDelegate d = new StringArgReturningVoidDelegate(SetStatus);
-                this.Invoke(d, new object[] { text });
+                Invoke(d, new object[] { text });
             }
             else
             {
-                this.statusLabel.Text = "Status: " + text;
+                statusLabel.Text = "Status: " + text;
             }
         }
 
         private int GetDeviceID()
         {
-            if (this.deviceComboBox.InvokeRequired)
+            if (deviceComboBox.InvokeRequired)
             {
                 return (int)deviceComboBox.Invoke(
                     new Func<int>(() => GetDeviceID())
@@ -204,7 +206,7 @@ namespace Twitch_TTS
 
         private int GetChatModeID()
         {
-            if (this.chatModeComboBox.InvokeRequired)
+            if (chatModeComboBox.InvokeRequired)
             {
                 return (int)chatModeComboBox.Invoke(
                     new Func<int>(() => GetChatModeID())
@@ -218,7 +220,7 @@ namespace Twitch_TTS
 
         private int GetVoiceID()
         {
-            if (this.voiceComboBox.InvokeRequired)
+            if (voiceComboBox.InvokeRequired)
             {
                 return (int)voiceComboBox.Invoke(
                     new Func<int>(() => GetVoiceID())
@@ -227,6 +229,20 @@ namespace Twitch_TTS
             else
             {
                 return voiceComboBox.SelectedIndex;
+            }
+        }
+
+        private bool GetCleverbotEnabled()
+        {
+            if (voiceComboBox.InvokeRequired)
+            {
+                return (bool)cleverBotCheckBox.Invoke(
+                    new Func<bool>(() => GetCleverbotEnabled())
+                );
+            }
+            else
+            {
+                return cleverBotCheckBox.Checked;
             }
         }
 
@@ -381,6 +397,11 @@ namespace Twitch_TTS
 
         private void TTS(string currentMessage)
         {
+            TTS(currentMessage, GetVoiceID(), false);
+        }
+
+        private void TTS(string currentMessage, int voiceID, bool cleverBot)
+        {
             if (lastChatMessage != currentMessage)
             {
                 lastChatMessage = currentMessage;
@@ -404,8 +425,30 @@ namespace Twitch_TTS
                     currentMessage = rgx.Replace(currentMessage, "");
                 }
 
-                rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
+                rgx = new Regex(@"(\[(?:[a-zA-Z]+)<[\d,]+>\])");
                 string[] splitMessages = rgx.Split(currentMessage);
+                currentMessage = "";
+                foreach (string message in splitMessages)
+                {
+                    rgx = new Regex(@"\[(?:[a-zA-Z]+)<([\d,]+)>\]");
+                    var match = rgx.Match(message);
+                    if (match.Success)
+                    {
+                        int value = 0;
+                        Int32.TryParse(match.Groups[1].ToString(), out value);
+                        if (value <= 1000 && value != 0)
+                        {
+                            currentMessage += message;
+                        }
+                    }
+                    else
+                    {
+                        currentMessage += message;
+                    }
+                }
+
+                rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
+                splitMessages = rgx.Split(currentMessage);
                 foreach (string message in splitMessages)
                 {
                     rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
@@ -430,7 +473,7 @@ namespace Twitch_TTS
                     {
                         using (FonixTalkEngine tts = new FonixTalkEngine())
                         {
-                            tts.Voice = (TtsVoice)GetVoiceID();
+                            tts.Voice = (TtsVoice)voiceID;
                             ttsArray.AddRange(tts.SpeakToMemory(message));
                         }
                     }
@@ -458,6 +501,14 @@ namespace Twitch_TTS
                 }
             }
 
+            if (GetCleverbotEnabled() && !cleverBot)
+            {
+                if (currentMessage.Length >= 1)
+                {
+                    new Thread(delegate () { SendToCleverbotAsync(currentMessage); }).Start();
+                }
+            }
+            
             if (GetChatModeID() == 1 && queuedMessage.Length > 0)
             {
                 string input = queuedMessage;
@@ -525,22 +576,25 @@ namespace Twitch_TTS
 
         private void ShowRetroChatWindow(object sender, EventArgs e)
         {
-            childForm = new RetroChatForm();
-            switch (retroChatColorComboBox.SelectedIndex)
+            if (childForm == null || childForm.IsDisposed)
             {
-                case 0:
-                    childForm.chatColor = ColorTranslator.FromHtml("#ff8100");
-                    //childForm.chatBackground = Properties.Resources.Background_Amber;
-                    break;
-                case 1:
-                    childForm.chatColor = ColorTranslator.FromHtml("#0ccc68");
-                    //childForm.chatBackground = Properties.Resources.Background_Green;
-                    break;
-                default:
-                    break;
+                childForm = new RetroChatForm();
+                switch (retroChatColorComboBox.SelectedIndex)
+                {
+                    case 0:
+                        childForm.chatColor = ColorTranslator.FromHtml("#ff8100");
+                        //childForm.chatBackground = Properties.Resources.Background_Amber;
+                        break;
+                    case 1:
+                        childForm.chatColor = ColorTranslator.FromHtml("#0ccc68");
+                        //childForm.chatBackground = Properties.Resources.Background_Green;
+                        break;
+                    default:
+                        break;
+                }
+                childForm.chatSize = new Font(childForm.chatSize.FontFamily, (float)retroChatFontSize.Value, FontStyle.Bold);
+                childForm.Show(this);
             }
-            childForm.chatSize = new Font(childForm.chatSize.FontFamily, (float)retroChatFontSize.Value, FontStyle.Bold);
-            childForm.Show(this);
         }
 
         private void OnRetroChatColorChanged(object sender, EventArgs e)
@@ -569,6 +623,14 @@ namespace Twitch_TTS
             {
                 childForm.chatSize = new Font(childForm.chatSize.FontFamily, (float)retroChatFontSize.Value, FontStyle.Bold);
             }
+        }
+
+        private async System.Threading.Tasks.Task SendToCleverbotAsync(string message)
+        {
+            string response = await cleverbotSession.SendAsync(message);
+            AddChat("John Madden", "#0000CD");
+            AddChat(": " + response);
+            new Thread(delegate () { TTS(response, 2, true); }).Start();
         }
     }
 

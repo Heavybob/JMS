@@ -61,6 +61,7 @@
             this.retroChatFontSize = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.cleverBotCheckBox = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bitsThreshold)).BeginInit();
@@ -221,6 +222,7 @@
             this.flowLayoutPanel1.Controls.Add(this.usersIgnoreCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.dialToneCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.cleverBotCheckBox);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(46, 422);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(313, 58);
@@ -433,6 +435,18 @@
             this.label10.TabIndex = 25;
             this.label10.Text = "Retro chat font size (pt)";
             // 
+            // cleverBotCheckBox
+            // 
+            this.cleverBotCheckBox.AutoSize = true;
+            this.cleverBotCheckBox.Checked = true;
+            this.cleverBotCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cleverBotCheckBox.Location = new System.Drawing.Point(216, 26);
+            this.cleverBotCheckBox.Name = "cleverBotCheckBox";
+            this.cleverBotCheckBox.Size = new System.Drawing.Size(71, 17);
+            this.cleverBotCheckBox.TabIndex = 21;
+            this.cleverBotCheckBox.Text = "Cleverbot";
+            this.cleverBotCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,6 +526,7 @@
         private System.Windows.Forms.NumericUpDown retroChatFontSize;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox cleverBotCheckBox;
     }
 }
 
