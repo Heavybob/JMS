@@ -51,6 +51,7 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.bitsThreshold = new System.Windows.Forms.NumericUpDown();
+            this.cleverBotCheckBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.chatTextBox = new System.Windows.Forms.RichTextBox();
             this.voiceComboBox = new System.Windows.Forms.ComboBox();
@@ -61,12 +62,16 @@
             this.retroChatFontSize = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.cleverBotCheckBox = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.vpTempo = new System.Windows.Forms.NumericUpDown();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bitsThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).BeginInit();
+            this.flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vpTempo)).BeginInit();
             this.SuspendLayout();
             // 
             // chatCommandBox
@@ -223,9 +228,10 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.dialToneCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.cleverBotCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel3);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(46, 422);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(313, 58);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(313, 95);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
             // moderatorsIgnoreCheckBox
@@ -313,6 +319,18 @@
             0,
             0});
             this.bitsThreshold.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
+            // 
+            // cleverBotCheckBox
+            // 
+            this.cleverBotCheckBox.AutoSize = true;
+            this.cleverBotCheckBox.Checked = true;
+            this.cleverBotCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cleverBotCheckBox.Location = new System.Drawing.Point(216, 26);
+            this.cleverBotCheckBox.Name = "cleverBotCheckBox";
+            this.cleverBotCheckBox.Size = new System.Drawing.Size(71, 17);
+            this.cleverBotCheckBox.TabIndex = 21;
+            this.cleverBotCheckBox.Text = "Cleverbot";
+            this.cleverBotCheckBox.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -435,17 +453,48 @@
             this.label10.TabIndex = 25;
             this.label10.Text = "Retro chat font size (pt)";
             // 
-            // cleverBotCheckBox
+            // flowLayoutPanel3
             // 
-            this.cleverBotCheckBox.AutoSize = true;
-            this.cleverBotCheckBox.Checked = true;
-            this.cleverBotCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cleverBotCheckBox.Location = new System.Drawing.Point(216, 26);
-            this.cleverBotCheckBox.Name = "cleverBotCheckBox";
-            this.cleverBotCheckBox.Size = new System.Drawing.Size(71, 17);
-            this.cleverBotCheckBox.TabIndex = 21;
-            this.cleverBotCheckBox.Text = "Cleverbot";
-            this.cleverBotCheckBox.UseVisualStyleBackColor = true;
+            this.flowLayoutPanel3.Controls.Add(this.label11);
+            this.flowLayoutPanel3.Controls.Add(this.vpTempo);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 48);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(130, 25);
+            this.flowLayoutPanel3.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 6);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "VP Tempo";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vpTempo
+            // 
+            this.vpTempo.Location = new System.Drawing.Point(66, 3);
+            this.vpTempo.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.vpTempo.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.vpTempo.Name = "vpTempo";
+            this.vpTempo.Size = new System.Drawing.Size(48, 20);
+            this.vpTempo.TabIndex = 15;
+            this.vpTempo.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
@@ -487,6 +536,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.bitsThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).EndInit();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vpTempo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,6 +579,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox cleverBotCheckBox;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown vpTempo;
     }
 }
 

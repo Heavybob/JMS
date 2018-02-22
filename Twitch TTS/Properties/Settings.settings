@@ -41,5 +41,8 @@
     <Setting Name="RetroChatFontSize" Type="System.Single" Scope="User">
       <Value Profile="(Default)">12</Value>
     </Setting>
+    <Setting Name="VPTempo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

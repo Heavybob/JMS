@@ -21,6 +21,7 @@ using CSCore.Streams;
 using CSCore.Codecs.WAV;
 using CSCore.Codecs.RAW;
 using Cleverbot.Net;
+using System.Linq;
 
 namespace Twitch_TTS
 {
@@ -28,10 +29,11 @@ namespace Twitch_TTS
     {
         delegate void StringArgReturningVoidDelegate(string text);
         delegate void ChatArgReturningVoidDelegate(string text, string colorHex);
-        public CleverbotSession cleverbotSession = CleverbotSession.NewSession("jOPGMvjNhM10VZIB", "AzHz9wUZbkGXjbrUIdRD7fO0chmfZPQD");
         public ConnectionCredentials credentials;
+        public CleverbotSession cleverbotSession;
         public TwitchClient client;
         public RetroChatForm childForm;
+        public FonixTalkEngine tts = new FonixTalkEngine();
         public List<WaveOut> ttsWavs = new List<WaveOut>();
         public string lastChatMessage = "";
         public string queuedMessage = "";
@@ -55,6 +57,72 @@ namespace Twitch_TTS
             {"[:hl]", "[:dv ap 10]"},
             {"[:sd]", "[:dv ap 10][:dv pr 1]"},
             {"[:nv]", ""}
+        };
+
+        public List<List<string>> tones = new List<List<string>> {
+            new List<string> {" ","0"},
+            new List<string> {"|", "0"},
+            new List<string> {"1","65"},
+            new List<string> {"!","69"},
+            new List<string> {"2","73"},
+            new List<string> {"@","78"},
+            new List<string> {"3","82"},
+            new List<string> {"4","87"},
+            new List<string> {"$","93"},
+            new List<string> {"5","98"},
+            new List<string> {"%","104"},
+            new List<string> {"6","110"},
+            new List<string> {"^","117"},
+            new List<string> {"7","123"},
+            new List<string> {"8","131"},
+            new List<string> {"*","139"},
+            new List<string> {"9","147"},
+            new List<string> {"(","156"},
+            new List<string> {"0","165"},
+            new List<string> {"q","175"},
+            new List<string> {"Q","185"},
+            new List<string> {"w","196"},
+            new List<string> {"W","208"},
+            new List<string> {"e","220"},
+            new List<string> {"E","233"},
+            new List<string> {"r","247"},
+            new List<string> {"t","262"},
+            new List<string> {"T","277"},
+            new List<string> {"y","294"},
+            new List<string> {"Y","311"},
+            new List<string> {"u","330"},
+            new List<string> {"i","349"},
+            new List<string> {"I","370"},
+            new List<string> {"o","392"},
+            new List<string> {"O","415"},
+            new List<string> {"p","440"},
+            new List<string> {"P","466"},
+            new List<string> {"a","494"},
+            new List<string> {"s","523"},
+            new List<string> {"S","554"},
+            new List<string> {"d","587"},
+            new List<string> {"D","622"},
+            new List<string> {"f","659"},
+            new List<string> {"g","698"},
+            new List<string> {"G","740"},
+            new List<string> {"h","784"},
+            new List<string> {"H","831"},
+            new List<string> {"j","880"},
+            new List<string> {"J","932"},
+            new List<string> {"k","988"},
+            new List<string> {"l","1047"},
+            new List<string> {"L","1109"},
+            new List<string> {"z","1175"},
+            new List<string> {"Z","1245"},
+            new List<string> {"x","1319"},
+            new List<string> {"c","1397"},
+            new List<string> {"C","1480"},
+            new List<string> {"v","1568"},
+            new List<string> {"V","1661"},
+            new List<string> {"b","1760"},
+            new List<string> {"B","1865"},
+            new List<string> {"n","1976"},
+            new List<string> {"m","2093"}
         };
         public int moderators = 0;
         public static List<Tuple<string, Color>> buffer = new List<Tuple<string, Color>>();
@@ -92,9 +160,18 @@ namespace Twitch_TTS
         {
             if (client == null || !client.IsConnected && usernameTextBox.Text != "")
             {
+                try
+                {
+                    credentials = new ConnectionCredentials(usernameTextBox.Text, OAuthTextBox.Text);
+                    client = new TwitchClient(credentials);
+                    //cleverbotSession = CleverbotSession.NewSession("jOPGMvjNhM10VZIB", "AzHz9wUZbkGXjbrUIdRD7fO0chmfZPQD");
+                }
+                catch (Exception)
+                {
+                    return;
+                }
                 SetStatus("Connecting...");
-                credentials = new ConnectionCredentials(usernameTextBox.Text, OAuthTextBox.Text);
-                client = new TwitchClient(credentials);
+                
 
                 client.OnMessageReceived += new EventHandler<OnMessageReceivedArgs>(OnChatMessageReceived);
                 client.OnConnected += new EventHandler<OnConnectedArgs>(OnConnected);
@@ -110,7 +187,7 @@ namespace Twitch_TTS
 
         private void DiconnectButton_Click(object sender, EventArgs e)
         {
-            if (client.IsConnected)
+            if (client != null && client.IsConnected)
             {
                 SetStatus("Disconnecting...");
                 client.LeaveChannel(Properties.Settings.Default.Username);
@@ -246,6 +323,20 @@ namespace Twitch_TTS
             }
         }
 
+        private int GetVPTempo()
+        {
+            if (vpTempo.InvokeRequired)
+            {
+                return (int)vpTempo.Invoke(
+                    new Func<int>(() => GetVPTempo())
+                );
+            }
+            else
+            {
+                return (int)vpTempo.Value;
+            }
+        }
+
         public void OnConnected(object sender, OnConnectedArgs e)
         {
             //CheckForIllegalCrossThreadCalls = false;
@@ -370,6 +461,7 @@ namespace Twitch_TTS
             Properties.Settings.Default.Voice = voiceComboBox.SelectedIndex;
             Properties.Settings.Default.RetroChatColorID = retroChatColorComboBox.SelectedIndex;
             Properties.Settings.Default.RetroChatFontSize = (float)retroChatFontSize.Value;
+            Properties.Settings.Default.VPTempo = (int)vpTempo.Value;
             Properties.Settings.Default.Save();
         }
 
@@ -388,6 +480,7 @@ namespace Twitch_TTS
             voiceComboBox.SelectedIndex = Properties.Settings.Default.Voice;
             retroChatColorComboBox.SelectedIndex = Properties.Settings.Default.RetroChatColorID;
             retroChatFontSize.Value = (decimal)Properties.Settings.Default.RetroChatFontSize;
+            vpTempo.Value = Properties.Settings.Default.VPTempo;
         }
 
         private void TTS(OnMessageReceivedArgs e)
@@ -447,31 +540,89 @@ namespace Twitch_TTS
                     }
                 }
 
-                rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
-                splitMessages = rgx.Split(currentMessage);
-                foreach (string message in splitMessages)
+                rgx = new Regex(@"(\[vp\])");
+                if (rgx.Match(currentMessage).Success)
                 {
-                    rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
-                    var match = rgx.Match(message);
-                    if (match.Success)
+                    string songString = currentMessage.Substring(4);
+                    rgx = new Regex(@"(\[[ \da-zA-Z]+\])");
+                    splitMessages = rgx.Split(songString);
+                    foreach (string message in splitMessages)
                     {
+                        rgx = new Regex(@"\[([ \da-zA-Z]+)\]");
+                        var match = rgx.Match(message);
                         int frequency = 0;
-                        int milis = 0;
-                        string[] values = match.Groups[1].ToString().Split(',');
-                        if (values.Length > 1)
-                        {
-                            Int32.TryParse(values[0], out frequency);
-                            Int32.TryParse(values[1], out milis);
-                        }
+                        int milis = GetVPTempo();
 
-                        if (frequency != 0 && milis != 0)
+                        if (match.Success)
                         {
-                            ttsArray.AddRange(GenerateSine(frequency, milis));
+                            List<List<short>> superSine = new List<List<short>>();
+                            try
+                            {
+                                foreach (char c in match.Groups[1].ToString())
+                                {
+                                    List<string> tone = tones.FirstOrDefault(stringToCheck => stringToCheck.Contains(c.ToString()));
+
+                                    Int32.TryParse(tone[1], out frequency);
+                                    if (c.ToString() == " ")
+                                    {
+                                        milis = milis;
+                                    }
+                                    superSine.Add(GenerateSineRaw(frequency, milis));
+                                }
+                                ttsArray.AddRange(CombineSineWaves(superSine));
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            foreach(char c in message)
+                            {
+                                List<string> tone = tones.FirstOrDefault(stringToCheck => stringToCheck.Contains(c.ToString()));
+                                try
+                                {
+                                    Int32.TryParse(tone[1], out frequency);
+                                    if (c.ToString() == " ")
+                                    {
+                                        milis = milis;
+                                    }
+                                    ttsArray.AddRange(GenerateSine(frequency, milis));
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
+                    splitMessages = rgx.Split(currentMessage);
+                    foreach (string message in splitMessages)
                     {
-                        using (FonixTalkEngine tts = new FonixTalkEngine())
+                        rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
+                        var match = rgx.Match(message);
+                        if (match.Success)
+                        {
+                            int frequency = 0;
+                            int milis = 0;
+                            string[] values = match.Groups[1].ToString().Split(',');
+                            if (values.Length > 1)
+                            {
+                                Int32.TryParse(values[0], out frequency);
+                                Int32.TryParse(values[1], out milis);
+                            }
+
+                            if (frequency != 0 && milis != 0)
+                            {
+                                ttsArray.AddRange(GenerateSine(frequency, milis));
+                            }
+                        }
+                        else
                         {
                             tts.Voice = (TtsVoice)voiceID;
                             ttsArray.AddRange(tts.SpeakToMemory(message));
@@ -505,7 +656,7 @@ namespace Twitch_TTS
             {
                 if (currentMessage.Length >= 1)
                 {
-                    new Thread(delegate () { SendToCleverbotAsync(currentMessage); }).Start();
+                    SendToCleverbot(currentMessage);
                 }
             }
             
@@ -558,10 +709,7 @@ namespace Twitch_TTS
 
             const short numChannels = 1;
             const int sampleRate = 11025;
-            const short bitsPerSample = 16;
-            const int byteRate = (numChannels * bitsPerSample * sampleRate) / 8;
             int samples = sampleRate * msDuration / 1000;
-            var sizeInBytes = samples * byteRate;
             
             double theta = (Math.PI * 2 * frequency) / (sampleRate * numChannels);
             double amp = volume >> 2;
@@ -572,6 +720,54 @@ namespace Twitch_TTS
             }
 
             return wavStream.ToArray();
+        }
+
+        public static List<short> GenerateSineRaw(int frequency, int msDuration, UInt16 volume = 16383)
+        {
+            List<short> wavStream = new List<short>();
+
+            const short numChannels = 1;
+            const int sampleRate = 11025;
+            int samples = sampleRate * msDuration / 1000;
+
+            double theta = (Math.PI * 2 * frequency) / (sampleRate * numChannels);
+            double amp = volume >> 2;
+            for (int i = 0; i < samples; i++)
+            {
+                short s = Convert.ToInt16(amp * Math.Sin(theta * i));
+                wavStream.Add(s);
+            }
+
+            return wavStream;
+        }
+
+        public static byte[] CombineSineWaves(List<List<short>> sineList)
+        {
+            List<byte> wavStream = new List<byte>();
+
+            int longestList = Int32.MinValue;
+            foreach (List<short> sine in sineList)
+            {
+                if (sine.Count > longestList)
+                {
+                    longestList = sine.Count;
+                }
+            }
+
+            List<short> sineSuperposition = new List<short>(new short[longestList]);
+            //sineSuperposition.Capacity = longestList;
+            for (int i = 0; i <= longestList; i++)
+            {
+                foreach (List<short> sine in sineList)
+                {
+                    if (sine.Count > i)
+                    {
+                        sineSuperposition[i] += sine[i];
+                    }
+                }
+            }
+
+            return sineSuperposition.SelectMany(BitConverter.GetBytes).ToArray();
         }
 
         private void ShowRetroChatWindow(object sender, EventArgs e)
@@ -625,12 +821,15 @@ namespace Twitch_TTS
             }
         }
 
-        private async System.Threading.Tasks.Task SendToCleverbotAsync(string message)
+        private void SendToCleverbot(string message)
         {
-            string response = await cleverbotSession.SendAsync(message);
-            AddChat("John Madden", "#0000CD");
-            AddChat(": " + response);
-            new Thread(delegate () { TTS(response, 2, true); }).Start();
+            if (cleverbotSession != null)
+            {
+                string response = cleverbotSession.Send(message);
+                AddChat("John Madden", "#0000CD");
+                AddChat(": " + response);
+                new Thread(delegate () { TTS(response, 2, true); }).Start();
+            }
         }
     }
 
