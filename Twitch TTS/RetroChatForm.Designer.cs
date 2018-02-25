@@ -43,7 +43,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(784, 561);
+            this.panel1.Size = new System.Drawing.Size(1264, 681);
             this.panel1.TabIndex = 1;
             // 
             // retroChatTextBox
@@ -57,7 +57,7 @@
             this.retroChatTextBox.ReadOnly = true;
             this.retroChatTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.retroChatTextBox.ShortcutsEnabled = false;
-            this.retroChatTextBox.Size = new System.Drawing.Size(764, 541);
+            this.retroChatTextBox.Size = new System.Drawing.Size(1244, 661);
             this.retroChatTextBox.TabIndex = 1;
             this.retroChatTextBox.Text = "";
             // 
@@ -67,7 +67,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(300, 200);

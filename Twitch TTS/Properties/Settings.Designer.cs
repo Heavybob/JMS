@@ -190,5 +190,29 @@ namespace Twitch_TTS.Properties {
                 this["VPTempo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoReboot {
+            get {
+                return ((bool)(this["AutoReboot"]));
+            }
+            set {
+                this["AutoReboot"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenChatOnStart {
+            get {
+                return ((bool)(this["OpenChatOnStart"]));
+            }
+            set {
+                this["OpenChatOnStart"] = value;
+            }
+        }
     }
 }

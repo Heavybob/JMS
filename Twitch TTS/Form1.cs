@@ -144,6 +144,51 @@ namespace Twitch_TTS
             InitializeComponent();
             GenerateDeviceList();
             LoadSettings();
+            if ((client == null || !client.IsConnected) && usernameTextBox.Text != "" && OAuthTextBox.Text != "" && autoConnectCheckBox.Checked)
+            {
+                try
+                {
+                    credentials = new ConnectionCredentials(usernameTextBox.Text, OAuthTextBox.Text);
+                    client = new TwitchClient(credentials);
+                    //cleverbotSession = CleverbotSession.NewSession("jOPGMvjNhM10VZIB", "AzHz9wUZbkGXjbrUIdRD7fO0chmfZPQD");
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                SetStatus("Connecting...");
+
+
+                client.OnMessageReceived += new EventHandler<OnMessageReceivedArgs>(OnChatMessageReceived);
+                client.OnConnected += new EventHandler<OnConnectedArgs>(OnConnected);
+                client.OnDisconnected += new EventHandler<OnDisconnectedArgs>(OnDisconnected);
+                client.OnModeratorsReceived += new EventHandler<OnModeratorsReceivedArgs>(OnModeratorsReceived);
+                client.OnChatCommandReceived += new EventHandler<OnChatCommandReceivedArgs>(OnCommandReceived);
+
+                SaveSettings();
+
+                client.Connect();
+            }
+
+            if ((childForm == null || childForm.IsDisposed) && openChatOnConnectCheckBox.Checked)
+            {
+                childForm = new RetroChatForm();
+                switch (retroChatColorComboBox.SelectedIndex)
+                {
+                    case 0:
+                        childForm.chatColor = ColorTranslator.FromHtml("#ff8100");
+                        //childForm.chatBackground = Properties.Resources.Background_Amber;
+                        break;
+                    case 1:
+                        childForm.chatColor = ColorTranslator.FromHtml("#0ccc68");
+                        //childForm.chatBackground = Properties.Resources.Background_Green;
+                        break;
+                    default:
+                        break;
+                }
+                childForm.chatSize = new Font(childForm.chatSize.FontFamily, (float)retroChatFontSize.Value, FontStyle.Bold);
+                childForm.Show(this);
+            }
         }
 
         public void GenerateDeviceList()
@@ -158,7 +203,7 @@ namespace Twitch_TTS
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            if (client == null || !client.IsConnected && usernameTextBox.Text != "")
+            if ((client == null || !client.IsConnected) && usernameTextBox.Text != "" && OAuthTextBox.Text != "")
             {
                 try
                 {
@@ -216,6 +261,11 @@ namespace Twitch_TTS
                 e.SuppressKeyPress = true;
                 new Thread(delegate () { TTS(text); }).Start();
             }
+        }
+
+        private void SaveSettingsButton_Click(object sender, EventArgs e)
+        {
+            SaveSettings();
         }
 
         private void AddChat(string text)
@@ -462,6 +512,8 @@ namespace Twitch_TTS
             Properties.Settings.Default.RetroChatColorID = retroChatColorComboBox.SelectedIndex;
             Properties.Settings.Default.RetroChatFontSize = (float)retroChatFontSize.Value;
             Properties.Settings.Default.VPTempo = (int)vpTempo.Value;
+            Properties.Settings.Default.AutoReboot = autoConnectCheckBox.Checked;
+            Properties.Settings.Default.OpenChatOnStart = openChatOnConnectCheckBox.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -481,6 +533,8 @@ namespace Twitch_TTS
             retroChatColorComboBox.SelectedIndex = Properties.Settings.Default.RetroChatColorID;
             retroChatFontSize.Value = (decimal)Properties.Settings.Default.RetroChatFontSize;
             vpTempo.Value = Properties.Settings.Default.VPTempo;
+            autoConnectCheckBox.Checked = Properties.Settings.Default.AutoReboot;
+            openChatOnConnectCheckBox.Checked = Properties.Settings.Default.OpenChatOnStart;
         }
 
         private void TTS(OnMessageReceivedArgs e)
@@ -563,10 +617,6 @@ namespace Twitch_TTS
                                     List<string> tone = tones.FirstOrDefault(stringToCheck => stringToCheck.Contains(c.ToString()));
 
                                     Int32.TryParse(tone[1], out frequency);
-                                    if (c.ToString() == " ")
-                                    {
-                                        milis = milis;
-                                    }
                                     superSine.Add(GenerateSineRaw(frequency, milis));
                                 }
                                 ttsArray.AddRange(CombineSineWaves(superSine));
@@ -584,10 +634,6 @@ namespace Twitch_TTS
                                 try
                                 {
                                     Int32.TryParse(tone[1], out frequency);
-                                    if (c.ToString() == " ")
-                                    {
-                                        milis = milis;
-                                    }
                                     ttsArray.AddRange(GenerateSine(frequency, milis));
                                 }
                                 catch (Exception)
@@ -645,7 +691,7 @@ namespace Twitch_TTS
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
 
                     }
@@ -830,7 +876,7 @@ namespace Twitch_TTS
                 AddChat(": " + response);
                 new Thread(delegate () { TTS(response, 2, true); }).Start();
             }
-        }
+        }        
     }
 
     public static class RichTextBoxExtensions

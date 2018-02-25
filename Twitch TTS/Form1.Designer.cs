@@ -52,6 +52,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.bitsThreshold = new System.Windows.Forms.NumericUpDown();
             this.cleverBotCheckBox = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.vpTempo = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.chatTextBox = new System.Windows.Forms.RichTextBox();
             this.voiceComboBox = new System.Windows.Forms.ComboBox();
@@ -62,16 +65,16 @@
             this.retroChatFontSize = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.vpTempo = new System.Windows.Forms.NumericUpDown();
+            this.saveSettingsButton = new System.Windows.Forms.Button();
+            this.autoConnectCheckBox = new System.Windows.Forms.CheckBox();
+            this.openChatOnConnectCheckBox = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bitsThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).BeginInit();
             this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vpTempo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).BeginInit();
             this.SuspendLayout();
             // 
             // chatCommandBox
@@ -188,10 +191,11 @@
             // 
             // dialToneCheckBox
             // 
+            this.dialToneCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.dialToneCheckBox.AutoSize = true;
-            this.dialToneCheckBox.Location = new System.Drawing.Point(133, 26);
+            this.dialToneCheckBox.Location = new System.Drawing.Point(53, 32);
             this.dialToneCheckBox.Name = "dialToneCheckBox";
-            this.dialToneCheckBox.Size = new System.Drawing.Size(77, 17);
+            this.dialToneCheckBox.Size = new System.Drawing.Size(68, 23);
             this.dialToneCheckBox.TabIndex = 13;
             this.dialToneCheckBox.Text = "Dial Tones";
             this.dialToneCheckBox.UseVisualStyleBackColor = true;
@@ -221,27 +225,29 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Controls.Add(this.autoConnectCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.moderatorsIgnoreCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.bitsIgnoreCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.subsIgnoreCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.usersIgnoreCheckBox);
-            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.dialToneCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.cleverBotCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel3);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(46, 422);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(313, 95);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(313, 102);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
             // moderatorsIgnoreCheckBox
             // 
+            this.moderatorsIgnoreCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.moderatorsIgnoreCheckBox.AutoSize = true;
             this.moderatorsIgnoreCheckBox.Checked = true;
             this.moderatorsIgnoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.moderatorsIgnoreCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.moderatorsIgnoreCheckBox.Location = new System.Drawing.Point(91, 3);
             this.moderatorsIgnoreCheckBox.Name = "moderatorsIgnoreCheckBox";
-            this.moderatorsIgnoreCheckBox.Size = new System.Drawing.Size(79, 17);
+            this.moderatorsIgnoreCheckBox.Size = new System.Drawing.Size(70, 23);
             this.moderatorsIgnoreCheckBox.TabIndex = 14;
             this.moderatorsIgnoreCheckBox.Text = "Moderators";
             this.moderatorsIgnoreCheckBox.UseVisualStyleBackColor = true;
@@ -249,12 +255,13 @@
             // 
             // bitsIgnoreCheckBox
             // 
+            this.bitsIgnoreCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.bitsIgnoreCheckBox.AutoSize = true;
             this.bitsIgnoreCheckBox.Checked = true;
             this.bitsIgnoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.bitsIgnoreCheckBox.Location = new System.Drawing.Point(88, 3);
+            this.bitsIgnoreCheckBox.Location = new System.Drawing.Point(167, 3);
             this.bitsIgnoreCheckBox.Name = "bitsIgnoreCheckBox";
-            this.bitsIgnoreCheckBox.Size = new System.Drawing.Size(43, 17);
+            this.bitsIgnoreCheckBox.Size = new System.Drawing.Size(34, 23);
             this.bitsIgnoreCheckBox.TabIndex = 0;
             this.bitsIgnoreCheckBox.Text = "Bits";
             this.bitsIgnoreCheckBox.UseVisualStyleBackColor = true;
@@ -262,12 +269,13 @@
             // 
             // subsIgnoreCheckBox
             // 
+            this.subsIgnoreCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.subsIgnoreCheckBox.AutoSize = true;
             this.subsIgnoreCheckBox.Checked = true;
             this.subsIgnoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.subsIgnoreCheckBox.Location = new System.Drawing.Point(137, 3);
+            this.subsIgnoreCheckBox.Location = new System.Drawing.Point(207, 3);
             this.subsIgnoreCheckBox.Name = "subsIgnoreCheckBox";
-            this.subsIgnoreCheckBox.Size = new System.Drawing.Size(81, 17);
+            this.subsIgnoreCheckBox.Size = new System.Drawing.Size(72, 23);
             this.subsIgnoreCheckBox.TabIndex = 1;
             this.subsIgnoreCheckBox.Text = "Subscribers";
             this.subsIgnoreCheckBox.UseVisualStyleBackColor = true;
@@ -275,12 +283,13 @@
             // 
             // usersIgnoreCheckBox
             // 
+            this.usersIgnoreCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.usersIgnoreCheckBox.AutoSize = true;
             this.usersIgnoreCheckBox.Checked = true;
             this.usersIgnoreCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.usersIgnoreCheckBox.Location = new System.Drawing.Point(224, 3);
+            this.usersIgnoreCheckBox.Location = new System.Drawing.Point(3, 32);
             this.usersIgnoreCheckBox.Name = "usersIgnoreCheckBox";
-            this.usersIgnoreCheckBox.Size = new System.Drawing.Size(53, 17);
+            this.usersIgnoreCheckBox.Size = new System.Drawing.Size(44, 23);
             this.usersIgnoreCheckBox.TabIndex = 2;
             this.usersIgnoreCheckBox.Text = "Users";
             this.usersIgnoreCheckBox.UseVisualStyleBackColor = true;
@@ -290,7 +299,7 @@
             // 
             this.flowLayoutPanel2.Controls.Add(this.label7);
             this.flowLayoutPanel2.Controls.Add(this.bitsThreshold);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 23);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(130, 58);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(130, 25);
@@ -322,15 +331,59 @@
             // 
             // cleverBotCheckBox
             // 
+            this.cleverBotCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.cleverBotCheckBox.AutoSize = true;
             this.cleverBotCheckBox.Checked = true;
             this.cleverBotCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cleverBotCheckBox.Location = new System.Drawing.Point(216, 26);
+            this.cleverBotCheckBox.Location = new System.Drawing.Point(127, 32);
             this.cleverBotCheckBox.Name = "cleverBotCheckBox";
-            this.cleverBotCheckBox.Size = new System.Drawing.Size(71, 17);
+            this.cleverBotCheckBox.Size = new System.Drawing.Size(62, 23);
             this.cleverBotCheckBox.TabIndex = 21;
             this.cleverBotCheckBox.Text = "Cleverbot";
             this.cleverBotCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.label11);
+            this.flowLayoutPanel3.Controls.Add(this.vpTempo);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 58);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(130, 25);
+            this.flowLayoutPanel3.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 6);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "VP Tempo";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vpTempo
+            // 
+            this.vpTempo.Location = new System.Drawing.Point(66, 3);
+            this.vpTempo.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.vpTempo.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.vpTempo.Name = "vpTempo";
+            this.vpTempo.Size = new System.Drawing.Size(48, 20);
+            this.vpTempo.TabIndex = 15;
+            this.vpTempo.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
             // 
             // label6
             // 
@@ -391,7 +444,7 @@
             // pictureBox1
             // 
             this.pictureBox1.ImageLocation = "https://ggs.sx/downloads/jms.png";
-            this.pictureBox1.Location = new System.Drawing.Point(11, 530);
+            this.pictureBox1.Location = new System.Drawing.Point(11, 559);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(560, 100);
             this.pictureBox1.TabIndex = 16;
@@ -453,54 +506,44 @@
             this.label10.TabIndex = 25;
             this.label10.Text = "Retro chat font size (pt)";
             // 
-            // flowLayoutPanel3
+            // saveSettingsButton
             // 
-            this.flowLayoutPanel3.Controls.Add(this.label11);
-            this.flowLayoutPanel3.Controls.Add(this.vpTempo);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 48);
-            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(130, 25);
-            this.flowLayoutPanel3.TabIndex = 22;
+            this.saveSettingsButton.Location = new System.Drawing.Point(11, 530);
+            this.saveSettingsButton.Name = "saveSettingsButton";
+            this.saveSettingsButton.Size = new System.Drawing.Size(348, 23);
+            this.saveSettingsButton.TabIndex = 26;
+            this.saveSettingsButton.Text = "Save Settings";
+            this.saveSettingsButton.UseVisualStyleBackColor = true;
+            this.saveSettingsButton.Click += new System.EventHandler(this.SaveSettingsButton_Click);
             // 
-            // label11
+            // autoConnectCheckBox
             // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 6);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 13);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "VP Tempo";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.autoConnectCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.autoConnectCheckBox.AutoSize = true;
+            this.autoConnectCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.autoConnectCheckBox.Name = "autoConnectCheckBox";
+            this.autoConnectCheckBox.Size = new System.Drawing.Size(82, 23);
+            this.autoConnectCheckBox.TabIndex = 23;
+            this.autoConnectCheckBox.Text = "Auto Connect";
+            this.autoConnectCheckBox.UseVisualStyleBackColor = true;
             // 
-            // vpTempo
+            // openChatOnConnectCheckBox
             // 
-            this.vpTempo.Location = new System.Drawing.Point(66, 3);
-            this.vpTempo.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.vpTempo.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.vpTempo.Name = "vpTempo";
-            this.vpTempo.Size = new System.Drawing.Size(48, 20);
-            this.vpTempo.TabIndex = 15;
-            this.vpTempo.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
+            this.openChatOnConnectCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.openChatOnConnectCheckBox.AutoSize = true;
+            this.openChatOnConnectCheckBox.Location = new System.Drawing.Point(433, 528);
+            this.openChatOnConnectCheckBox.Name = "openChatOnConnectCheckBox";
+            this.openChatOnConnectCheckBox.Size = new System.Drawing.Size(126, 23);
+            this.openChatOnConnectCheckBox.TabIndex = 24;
+            this.openChatOnConnectCheckBox.Text = "Open Chat on Connect";
+            this.openChatOnConnectCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 642);
+            this.ClientSize = new System.Drawing.Size(585, 668);
+            this.Controls.Add(this.saveSettingsButton);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.retroChatFontSize);
@@ -508,6 +551,7 @@
             this.Controls.Add(this.showretroChatButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.voiceComboBox);
+            this.Controls.Add(this.openChatOnConnectCheckBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.pictureBox1);
@@ -534,11 +578,11 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bitsThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).EndInit();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vpTempo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.retroChatFontSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -582,6 +626,9 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown vpTempo;
+        private System.Windows.Forms.Button saveSettingsButton;
+        private System.Windows.Forms.CheckBox autoConnectCheckBox;
+        private System.Windows.Forms.CheckBox openChatOnConnectCheckBox;
     }
 }
 
