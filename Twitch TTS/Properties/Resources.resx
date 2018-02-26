@@ -14920,4 +14920,7 @@
   <data name="Terminus_Font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\TerminusTTF-4.38.2.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="VT220_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\vt220-mod.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

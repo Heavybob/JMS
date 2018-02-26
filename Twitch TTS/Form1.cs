@@ -14,11 +14,7 @@ using TwitchLib;
 using TwitchLib.Events.Client;
 using TwitchLib.Enums;
 using TwitchLib.Models.Client;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using System.Drawing;
-using CSCore.Streams;
-using CSCore.Codecs.WAV;
 using CSCore.Codecs.RAW;
 using Cleverbot.Net;
 using System.Linq;
@@ -582,7 +578,7 @@ namespace Twitch_TTS
                     if (match.Success)
                     {
                         int value = 0;
-                        Int32.TryParse(match.Groups[1].ToString(), out value);
+                        Int32.TryParse(match.Groups[1].ToString().Split(',')[0], out value);
                         if (value <= 1000 && value != 0)
                         {
                             currentMessage += message;

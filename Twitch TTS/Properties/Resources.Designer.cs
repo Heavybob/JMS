@@ -109,5 +109,15 @@ namespace Twitch_TTS.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] VT220_mod {
+            get {
+                object obj = ResourceManager.GetObject("VT220_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

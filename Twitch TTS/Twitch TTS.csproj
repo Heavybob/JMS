@@ -169,6 +169,7 @@
     </None>
     <None Include="TerminusTTF-4.38.2.ttf" />
     <None Include="TerminusTTF-Bold-4.38.2.ttf" />
+    <None Include="VT220-mod.ttf" />
     <Resource Include="COMMODORE_PET_64_2y.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

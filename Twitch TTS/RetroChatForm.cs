@@ -68,10 +68,10 @@ namespace Twitch_TTS
         {
             //Select your font from the resources.
             //My font here is "Digireu.ttf"
-            int fontLength = Properties.Resources.Terminus_Bold_Font.Length;
+            int fontLength = Properties.Resources.VT220_mod.Length;
 
             // create a buffer to read in to
-            byte[] fontdata = Properties.Resources.Terminus_Bold_Font;
+            byte[] fontdata = Properties.Resources.VT220_mod;
 
             // create an unsafe memory block for the font data
             System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
