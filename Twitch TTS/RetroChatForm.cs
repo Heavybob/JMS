@@ -43,7 +43,7 @@ namespace Twitch_TTS
 
         private void InitializeTimer()
         {
-            retroChatTimer.Interval = 10;
+            retroChatTimer.Interval = 2;
             retroChatTimer.Tick += new EventHandler(retroChatTimer_Tick);
             retroChatTimer.Enabled = true;
         }

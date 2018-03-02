@@ -642,32 +642,37 @@ namespace Twitch_TTS
                 }
                 else
                 {
-                    rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
-                    splitMessages = rgx.Split(currentMessage);
-                    foreach (string message in splitMessages)
+                    rgx = new Regex(@"([^ \dA-Za-z!""#$%&()*0,\-./:;<=>?@[\\\]^_`'{|}~\n\r])+");
+                    var match = rgx.Match(currentMessage);
+                    if (!match.Success)
                     {
-                        rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
-                        var match = rgx.Match(message);
-                        if (match.Success)
+                        rgx = new Regex(@"(\[:(?:tone|t)[ \d,]+\])");
+                        splitMessages = rgx.Split(currentMessage);
+                        foreach (string message in splitMessages)
                         {
-                            int frequency = 0;
-                            int milis = 0;
-                            string[] values = match.Groups[1].ToString().Split(',');
-                            if (values.Length > 1)
+                            rgx = new Regex(@"\[:(?:tone|t)([ \d,]+)\]");
+                            match = rgx.Match(message);
+                            if (match.Success)
                             {
-                                Int32.TryParse(values[0], out frequency);
-                                Int32.TryParse(values[1], out milis);
-                            }
+                                int frequency = 0;
+                                int milis = 0;
+                                string[] values = match.Groups[1].ToString().Split(',');
+                                if (values.Length > 1)
+                                {
+                                    Int32.TryParse(values[0], out frequency);
+                                    Int32.TryParse(values[1], out milis);
+                                }
 
-                            if (frequency != 0 && milis != 0)
-                            {
-                                ttsArray.AddRange(GenerateSine(frequency, milis));
+                                if (frequency != 0 && milis != 0)
+                                {
+                                    ttsArray.AddRange(GenerateSine(frequency, milis));
+                                }
                             }
-                        }
-                        else
-                        {
-                            tts.Voice = (TtsVoice)voiceID;
-                            ttsArray.AddRange(tts.SpeakToMemory(message));
+                            else
+                            {
+                                tts.Voice = (TtsVoice)voiceID;
+                                ttsArray.AddRange(tts.SpeakToMemory(message));
+                            }
                         }
                     }
                 }
