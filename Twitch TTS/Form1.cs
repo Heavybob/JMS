@@ -74,7 +74,7 @@ namespace Twitch_TTS
             new List<string> {"*","139"},
             new List<string> {"9","147"},
             new List<string> {"(","156"},
-            new List<string> {"0","165"},
+            new List<string> {"0","165"}, // Isn't being Phased properly by the regex. 
             new List<string> {"q","175"},
             new List<string> {"Q","185"},
             new List<string> {"w","196"},
