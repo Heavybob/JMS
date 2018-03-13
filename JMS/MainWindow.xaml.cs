@@ -171,26 +171,6 @@ namespace JMS
 
                 client.Connect();
             }
-
-            if ((childForm == null || WindowHelper.IsDisposed(childForm)) && (bool)openChatOnConnectCheckBox.IsChecked)
-            {
-                childForm = new RetroChat();
-                /*switch (retroChatColorComboBox.SelectedIndex)
-                {
-                    case 0:
-                        childForm.chatColor = ColorTranslator.FromHtml("#ff8100");
-                        //childForm.chatBackground = Properties.Resources.Background_Amber;
-                        break;
-                    case 1:
-                        childForm.chatColor = ColorTranslator.FromHtml("#0ccc68");
-                        //childForm.chatBackground = Properties.Resources.Background_Green;
-                        break;
-                    default:
-                        break;
-                }
-                childForm.chatSize = new Font(childForm.chatSize.FontFamily, (float)retroChatFontSize.Value, FontStyle.Bold);*/
-                childForm.Show();
-            }
         }
 
         public void GenerateDeviceList()
@@ -286,7 +266,10 @@ namespace JMS
                 }
 
                 buffer.Add(new Tuple<string, string>("\r\n", "#000000"));*/
-                childForm.AddChat(text);
+                if (childForm != null)
+                {
+                    childForm.AddChat(text);
+                }
             }
         }
 
@@ -305,7 +288,10 @@ namespace JMS
                 {
                     buffer.Add(new Tuple<string, string>(c.ToString(), colorHex));
                 }*/
-                childForm.AddChat(text);
+                if (childForm != null)
+                {
+                    childForm.AddChat(text);
+                }
             }
         }
 
@@ -378,20 +364,6 @@ namespace JMS
             }
         }
 
-        private int GetVPTempo()
-        {
-            if (!vpTempo.CheckAccess())
-            {
-                return vpTempo.Dispatcher.Invoke(
-                    new Func<int>(() => GetVPTempo())
-                );
-            }
-            else
-            {
-                return (int)vpTempo.Value;
-            }
-        }
-
         private bool GetDialTonesEnabled()
         {
             if (!dialToneCheckBox.CheckAccess())
@@ -403,6 +375,90 @@ namespace JMS
             else
             {
                 return (bool)dialToneCheckBox.IsChecked;
+            }
+        }
+
+        private bool GetModeratorsEnabled()
+        {
+            if (!moderatorsIgnoreCheckBox.CheckAccess())
+            {
+                return moderatorsIgnoreCheckBox.Dispatcher.Invoke(
+                    new Func<bool>(() => GetModeratorsEnabled())
+                );
+            }
+            else
+            {
+                return (bool)moderatorsIgnoreCheckBox.IsChecked;
+            }
+        }
+
+        private bool GetBitsEnabled()
+        {
+            if (!bitsIgnoreCheckBox.CheckAccess())
+            {
+                return bitsIgnoreCheckBox.Dispatcher.Invoke(
+                    new Func<bool>(() => GetBitsEnabled())
+                );
+            }
+            else
+            {
+                return (bool)bitsIgnoreCheckBox.IsChecked;
+            }
+        }
+
+        private bool GetSubscribersEnabled()
+        {
+            if (!subsIgnoreCheckBox.CheckAccess())
+            {
+                return subsIgnoreCheckBox.Dispatcher.Invoke(
+                    new Func<bool>(() => GetSubscribersEnabled())
+                );
+            }
+            else
+            {
+                return (bool)subsIgnoreCheckBox.IsChecked;
+            }
+        }
+
+        private bool GetUsersEnabled()
+        {
+            if (!usersIgnoreCheckBox.CheckAccess())
+            {
+                return usersIgnoreCheckBox.Dispatcher.Invoke(
+                    new Func<bool>(() => GetDialTonesEnabled())
+                );
+            }
+            else
+            {
+                return (bool)usersIgnoreCheckBox.IsChecked;
+            }
+        }
+
+        private int GetBitThreshold()
+        {
+            if (!bitsThreshold.CheckAccess())
+            {
+                return bitsThreshold.Dispatcher.Invoke(
+                    new Func<int>(() => GetBitThreshold())
+                );
+            }
+            else
+            {
+                return (int)bitsThreshold.Value;
+            }
+        }
+
+        private int GetVPTempo()
+        {
+            if (!vpTempo.CheckAccess())
+            {
+                return vpTempo.Dispatcher.Invoke(
+                    new Func<int>(() => GetVPTempo())
+                );
+            }
+            else
+            {
+                return (int)vpTempo.Value;
             }
         }
 
@@ -507,10 +563,10 @@ namespace JMS
                 e.ChatMessage.UserType == UserType.Broadcaster ||
                 e.ChatMessage.UserType == UserType.Admin ||
                 e.ChatMessage.UserType == UserType.GlobalModerator ||
-                e.ChatMessage.IsModerator && (bool)moderatorsIgnoreCheckBox.IsChecked ||
-                e.ChatMessage.Bits >= bitsThreshold.Value && (bool)bitsIgnoreCheckBox.IsChecked ||
-                e.ChatMessage.IsSubscriber && (bool)subsIgnoreCheckBox.IsChecked ||
-                e.ChatMessage.UserType == UserType.Viewer && (bool)usersIgnoreCheckBox.IsChecked)
+                e.ChatMessage.IsModerator && GetModeratorsEnabled() ||
+                e.ChatMessage.Bits >= GetBitThreshold() && GetBitsEnabled() ||
+                e.ChatMessage.IsSubscriber && GetSubscribersEnabled() ||
+                e.ChatMessage.UserType == UserType.Viewer && GetUsersEnabled())
                 )
             {
                 switch (GetChatModeID())
@@ -905,6 +961,7 @@ namespace JMS
             if (childForm == null || WindowHelper.IsDisposed(childForm))
             {
                 childForm = new RetroChat();
+                //childForm.Owner = GetWindow(this);
                 childForm.Show();
             }
         }
@@ -917,6 +974,14 @@ namespace JMS
                 AddChat("John Madden" + ": " + response.CleverOutput);
                 
                 new Thread(delegate () { TTS(response.CleverOutput, 2, true); }).Start();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if ((bool)openChatOnConnectCheckBox.IsChecked)
+            {
+                ShowRetroChat_Click(null, null);
             }
         }
     }

@@ -121,18 +121,18 @@ body {
         position: absolute;
         top: -10px;
         left: -10px;
-        background-color: #00ff77;
+        background-color: #ffa200;
         background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%, rgba(0,0,0,0.62) 45%, rgba(0,9,4,0.6) 47%, rgba(0,255,119,1) 100%);
         /* FF3.6+ */
         background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,1)), color-stop(45%,rgba(0,0,0,0.62)), color-stop(47%,rgba(0,9,4,0.6)), color-stop(100%,rgba(0,255,119,1)));
         /* Chrome,Safari4+ */
-        background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(0,255,119,1) 100%);
+        background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(255, 185, 0, 1) 100%);
         /* Chrome10+,Safari5.1+ */
         background: -o-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(0,255,119,1) 100%);
         /* Opera 12+ */
         background: -ms-radial-gradient(center, ellipse cover, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(0,255,119,1) 100%);
         /* IE10+ */
-        background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(0,255,119,1) 100%);
+        background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%,rgba(0,0,0,0.62) 45%,rgba(0,9,4,0.6) 47%,rgba(255, 185, 0, 1) 100%);
         /* W3C */
         box-shadow: inset 0px 0px 40px 40px rgba(100, 100, 100, .5);
         border-radius: 20px;
@@ -155,13 +155,13 @@ body {
     /* FF3.6+ */
     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,255,119,0.45)), color-stop(100%,rgba(255,255,255,0)));
     /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(0,255,119,0.45) 0%,rgba(255,255,255,0) 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 185, 0, 0.45) 0%,rgba(255,255,255,0) 100%);
     /* Chrome10+,Safari5.1+ */
     background: -o-radial-gradient(center, ellipse cover, rgba(0,255,119,0.45) 0%,rgba(255,255,255,0) 100%);
     /* Opera 12+ */
     background: -ms-radial-gradient(center, ellipse cover, rgba(0,255,119,0.45) 0%,rgba(255,255,255,0) 100%);
     /* IE10+ */
-    background: radial-gradient(ellipse at center, rgba(0,255,119,0.45) 0%,rgba(255,255,255,0) 100%);
+    background: radial-gradient(ellipse at center, rgba(255, 185, 0, 0.45) 0%,rgba(255,255,255,0) 100%);
     /* W3C */
     -webkit-transform-origin: 50% 50%;
     -webkit-transform: perspective(200px) rotateX(.5deg) skewX(2deg) scale(1.03);
@@ -268,12 +268,11 @@ body {
     box-sizing: border-box;
     background: transparent;
     font-family: MyFont, Monospace;
-    font-size: 15px;
+    font-size: 24px;
     line-height: 20px;
-    /*color : #00ff77;
-    */
-    color: #18FF62;
-    text-shadow: 0px 0px 2px rgba(10, 255, 10, .8);
+    color: #ffb900;
+    color: #ffb900;
+    text-shadow: 0px 0px 2px rgba(255, 185, 0, 0.8);
     opacity: .99;
     background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%, rgba(0,0,0,0.19) 100%);
     /* FF3.6+ */
@@ -525,7 +524,7 @@ body {
 @-webkit-keyframes shifter {
     0% {
         -webkit-transform: perspective(200px) skewX(.5deg);
-        text-shadow: 0px 0px 2px rgba(10, 255, 10, .8);
+        text-shadow: 0px 0px 2px #ffb900;
     }
 
     8% {
@@ -543,7 +542,7 @@ body {
 
     100% {
         -webkit-transform: perspective(200px) skewX(.1deg);
-        text-shadow: 1px 0px 2px rgba(100, 255, 100, 1);
+        text-shadow: 1px 0px 2px #ffb900;
     }
 }
 

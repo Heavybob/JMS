@@ -120,7 +120,6 @@ D:\Users\Ian\Documents\GitHub\JMS\JMS\bin\x86\Release\Resources\monofonto.woff
 D:\Users\Ian\Documents\GitHub\JMS\JMS\bin\x86\Release\JMS.exe.config
 D:\Users\Ian\Documents\GitHub\JMS\JMS\bin\x86\Release\JMS.exe
 D:\Users\Ian\Documents\GitHub\JMS\JMS\bin\x86\Release\JMS.pdb
-D:\Users\Ian\Documents\GitHub\JMS\JMS\obj\x86\Release\JMS.csprojResolveAssemblyReference.cache
 D:\Users\Ian\Documents\GitHub\JMS\JMS\obj\x86\Release\MainWindow.g.cs
 D:\Users\Ian\Documents\GitHub\JMS\JMS\obj\x86\Release\RetroChat.g.cs
 D:\Users\Ian\Documents\GitHub\JMS\JMS\obj\x86\Release\App.g.cs

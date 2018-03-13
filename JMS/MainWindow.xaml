@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:JMS"
         mc:Ignorable="d"
-        Title="JMS" Height="668" Width="585" ResizeMode="CanMinimize">
+        Title="JMS" Height="668" Width="585" ResizeMode="CanMinimize" Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
