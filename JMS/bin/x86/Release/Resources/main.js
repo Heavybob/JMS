@@ -50,11 +50,8 @@ function padCenter(str, width, padding) {
 }
 
 window.requestAnimFrame = (function(){
-    return  window.requestAnimationFrame       ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame    ||
-    function( callback ){
-        window.setTimeout(callback, 1000 / 60);
+    return function( callback ){
+        window.setTimeout(callback, 100 / 60);
     };
 })();
 
@@ -82,7 +79,7 @@ window.requestAnimFrame = (function(){
     }
 })();
 
-function print(input, lp) {
+function printConsole(input, lp) {
     update();
     _obuffer = _obuffer.concat(lp ? [input] : input.split(''));
 }
@@ -98,7 +95,7 @@ function clear() {
     $output.value = '';
     _ibuffer = [];
     _obuffer = [];
-    print("");
+    printConsole("");
 }
 
 window.onload = function() {
@@ -115,23 +112,18 @@ window.onload = function() {
         update();
     };
 
-    print("Initializing RetroChat 3000 v1.0 ....................................................\n");
-
-    //print("------------------------------------------------------------------------------------------------------------------");
-    print("                  @@@  @@@  @@@  @@@@@@@@  @@@        @@@@@@@   @@@@@@   @@@@@@@@@@   @@@@@@@@                  \n", true);
-    print("                  @@@  @@@  @@@  @@@@@@@@  @@@       @@@@@@@@  @@@@@@@@  @@@@@@@@@@@  @@@@@@@@                  \n", true);
-    print("                  @@!  @@!  @@!  @@!       @@!       !@@       @@!  @@@  @@! @@! @@!  @@!                       \n", true);
-    print("                  !@!  !@!  !@!  !@!       !@!       !@!       !@!  @!@  !@! !@! !@!  !@!                       \n", true);
-    print("                  @!!  !!@  @!@  @!!!:!    @!!       !@!       @!@  !@!  @!! !!@ @!@  @!!!:!                    \n", true);
-    print("                  !@!  !!!  !@!  !!!!!:    !!!       !!!       !@!  !!!  !@!   ! !@!  !!!!!:                    \n", true);
-    print("                  !!:  !!:  !!:  !!:       !!:       :!!       !!:  !!!  !!:     !!:  !!:                       \n", true);
-    print("                  :!:  :!:  :!:  :!:        :!:      :!:       :!:  !:!  :!:     :!:  :!:                       \n", true);
-    print("                   :::: :: :::    :: ::::   :: ::::   ::: :::  ::::: ::  :::     ::    :: ::::                  \n", true);
-    print("                    :: :  : :    : :: ::   : :: : :   :: :: :   : :  :    :      :    : :: ::                   \n", true);
-    print("\n\n\n", true);
-
-    print(padCenter("All graphics are created using CSS, no static files or images\n", 113), true);
-
-    print("\n\n\n\n\n", true);
-    print("Type '!howto' to learn how to play.\n", true);
+    printConsole("Initializing RetroChat 3000 v1.0 ....................................................\n\n");
+    
+    printConsole("                  @@@  @@@  @@@  @@@@@@@@  @@@        @@@@@@@   @@@@@@   @@@@@@@@@@   @@@@@@@@                  \n", true);
+    printConsole("                  @@@  @@@  @@@  @@@@@@@@  @@@       @@@@@@@@  @@@@@@@@  @@@@@@@@@@@  @@@@@@@@                  \n", true);
+    printConsole("                  @@!  @@!  @@!  @@!       @@!       !@@       @@!  @@@  @@! @@! @@!  @@!                       \n", true);
+    printConsole("                  !@!  !@!  !@!  !@!       !@!       !@!       !@!  @!@  !@! !@! !@!  !@!                       \n", true);
+    printConsole("                  @!!  !!@  @!@  @!!!:!    @!!       !@!       @!@  !@!  @!! !!@ @!@  @!!!:!                    \n", true);
+    printConsole("                  !@!  !!!  !@!  !!!!!:    !!!       !!!       !@!  !!!  !@!   ! !@!  !!!!!:                    \n", true);
+    printConsole("                  !!:  !!:  !!:  !!:       !!:       :!!       !!:  !!!  !!:     !!:  !!:                       \n", true);
+    printConsole("                  :!:  :!:  :!:  :!:        :!:      :!:       :!:  !:!  :!:     :!:  :!:                       \n", true);
+    printConsole("                   :::: :: :::    :: ::::   :: ::::   ::: :::  ::::: ::  :::     ::    :: ::::                  \n", true);
+    printConsole("                    :: :  : :    : :: ::   : :: : :   :: :: :   : :  :    :      :    : :: ::                   \n", true);
+    printConsole("\n\n\n", true);
+    printConsole("Type '!howto' to learn how to play.\n", true);
 };

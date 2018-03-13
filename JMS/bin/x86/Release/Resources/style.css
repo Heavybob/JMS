@@ -257,7 +257,8 @@ body {
     -moz-appearance: none;
     -moz-border-radius: 0px;
     overflow: hidden;
-    white-space: pre;
+    word-wrap: break-word !important;
+    white-space: pre-wrap;
     border: 0 none;
     display: block !important;
     width: 100%;

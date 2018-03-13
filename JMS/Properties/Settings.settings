@@ -18,22 +18,22 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableModerators" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableBits" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableSubs" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableUsers" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="BitsThreshold" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Voice" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="RetroChatColorID" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="VPTempo" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="AutoReboot" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

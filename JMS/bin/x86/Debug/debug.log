@@ -1,10 +1,6 @@
-[0312/212140.496:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
-[0312/212149.251:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
-[0312/212154.705:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
-[0312/212213.540:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
-[0312/213236.915:INFO:CONSOLE(1)] "Uncaught SyntaxError: missing ) after argument list", source: about:blank (1)
-[0312/213355.795:INFO:CONSOLE(1)] "Uncaught SyntaxError: missing ) after argument list", source: about:blank (1)
-[0312/220910.710:INFO:CONSOLE(1)] "Uncaught SyntaxError: missing ) after argument list", source: about:blank (1)
-[0312/221217.847:INFO:CONSOLE(1)] "Uncaught SyntaxError: missing ) after argument list", source: about:blank (1)
-[0312/222400.734:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
-[0312/222402.868:INFO:CONSOLE(1)] "Uncaught SyntaxError: Invalid or unexpected token", source: about:blank (1)
+[0312/231516.681:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2
+[0312/231620.002:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2
+[0312/231620.002:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2
+[0312/231620.003:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2
+[0312/231620.003:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2
+[0312/231620.156:ERROR:shader_disk_cache.cc(238)] Failed to create shader cache entry: -2

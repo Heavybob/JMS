@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Documents;
 
