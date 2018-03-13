@@ -1,0 +1,96 @@
+﻿<Window x:Class="JMS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:JMS"
+        mc:Ignorable="d"
+        Title="JMS" Height="668" Width="585" ResizeMode="CanMinimize">
+
+    <Window.Resources>
+        <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Margin" Value="5,3" />
+            <Setter Property="Padding" Value="5,0" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Button Content="Connect Bot" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="ConnectButton_Click"/>
+        <Button Content="Disconnect Bot" HorizontalAlignment="Left" Height="23" Margin="469,10,0,0" VerticalAlignment="Top" Width="100" Click="DiconnectButton_Click"/>
+        <Border BorderBrush="{x:Null}" Margin="10,37,485,576">
+            <Label Content="Username" VerticalAlignment="Center"/>
+        </Border>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="94,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="473"/>
+        <Border BorderBrush="{x:Null}" Margin="10,63,485,550">
+            <Label Content="OAuth Token" VerticalAlignment="Center"/>
+        </Border>
+        <PasswordBox x:Name="OAuthTextBox" HorizontalAlignment="Left" Height="23" Margin="94,66,0,0" VerticalAlignment="Top" Width="473"/>
+
+        <Border BorderBrush="{x:Null}" Margin="10,97,347,516">
+            <Label x:Name="statusLabel" Content="Status: Disconnected" VerticalAlignment="Center"/>
+        </Border>
+        
+        <Border BorderBrush="{x:Null}" Margin="232,97,257,516">
+            <Label Content="Output Device" VerticalAlignment="Center"/>
+        </Border>
+        <ComboBox x:Name="deviceComboBox" HorizontalAlignment="Left" Height="23" Margin="327,100,0,0" VerticalAlignment="Top" Width="240"/>
+        <Border BorderBrush="{x:Null}" Margin="362,123,175,490">
+            <Label Content="Voice" VerticalAlignment="Center"/>
+        </Border>
+        <ComboBox x:Name="voiceComboBox" HorizontalAlignment="Left" Height="23" Margin="409,126,0,0" VerticalAlignment="Top" Width="158" SelectedIndex="4">
+            <ListBoxItem Content="Paul"/>
+            <ListBoxItem Content="Betty"/>
+            <ListBoxItem Content="Harry"/>
+            <ListBoxItem Content="Frank"/>
+            <ListBoxItem Content="Dennis"/>
+            <ListBoxItem Content="Kit"/>
+            <ListBoxItem Content="Ursula"/>
+            <ListBoxItem Content="Rita"/>
+            <ListBoxItem Content="Wendy"/>
+        </ComboBox>
+        <RichTextBox x:Name="chatTextBox" HorizontalAlignment="Left" Height="221" Margin="10,151,0,0" VerticalAlignment="Top" Width="559">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+
+        <Border BorderBrush="{x:Null}" Margin="10,377,537,236">
+            <Label Content="Say" VerticalAlignment="Center"/>
+        </Border>
+        <TextBox x:Name="chatCommandBox" HorizontalAlignment="Left" Height="23" Margin="47,380,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="442" KeyDown="ChatCommandBox_KeyDown"/>
+        <Button Content="Say" HorizontalAlignment="Left" Height="23" Margin="494,380,0,0" VerticalAlignment="Top" Width="75" Click="SendCommandButton_Click"/>
+        <WrapPanel Orientation="Horizontal" Margin="10,408,256,143" Width="313">
+            <ToggleButton x:Name="autoConnectCheckBox" Content="Auto Connect" Height="23" Style="{StaticResource ToggleButtonStyle}"/>
+            <ToggleButton x:Name="moderatorsIgnoreCheckBox" Content="Moderators" Height="23" Style="{StaticResource ToggleButtonStyle}" IsChecked="True"/>
+            <ToggleButton x:Name="bitsIgnoreCheckBox" Content="Bits" Height="23" Style="{StaticResource ToggleButtonStyle}" IsChecked="True"/>
+            <ToggleButton x:Name="subsIgnoreCheckBox" Content="Subscribers" Height="23" Style="{StaticResource ToggleButtonStyle}" IsChecked="True"/>
+            <ToggleButton x:Name="usersIgnoreCheckBox" Content="Users" Height="23" Style="{StaticResource ToggleButtonStyle}" IsChecked="True"/>
+            <ToggleButton x:Name="dialToneCheckBox" Content="Dial Tones" Height="23" Style="{StaticResource ToggleButtonStyle}"/>
+            <ToggleButton x:Name="cleverBotCheckBox" Content="Cleverbot" Height="23" Style="{StaticResource ToggleButtonStyle}" IsChecked="True"/>
+            <WrapPanel>
+                <Label Content="VP Tempo" VerticalAlignment="Center"/>
+                <xctk:IntegerUpDown Name="vpTempo" Minimum="1" Maximum="1000" DefaultValue="200" Width="48" />
+            </WrapPanel>
+            <WrapPanel>
+                <Label Content="Bits Threshold" VerticalAlignment="Center"/>
+                <xctk:IntegerUpDown Name="bitsThreshold" Minimum="0" DefaultValue="0" Width="48" />
+            </WrapPanel>
+        </WrapPanel>
+
+        <Border BorderBrush="{x:Null}" Margin="364,405,173,208">
+            <Label Content="Mode" VerticalAlignment="Center"/>
+        </Border>
+        <ComboBox x:Name="chatModeComboBox" HorizontalAlignment="Left" Height="23" Margin="411,408,0,0" VerticalAlignment="Top" Width="158" SelectedIndex="0">
+            <ListBoxItem Content="Skip"/>
+            <ListBoxItem Content="Queue"/>
+            <ListBoxItem Content="Anarchy"/>
+        </ComboBox>
+        <Button Content="Show Retro Chat" HorizontalAlignment="Left" Margin="411,436,0,0" VerticalAlignment="Top" Height="23" Width="158" Click="ShowRetroChat_Click"/>
+        <ToggleButton x:Name="openChatOnConnectCheckBox" Content="Open Chat on Connect" Margin="411,464,10,152" Height="23"/>
+        <Button Content="Save Settings" HorizontalAlignment="Left" Height="23" Margin="10,501,0,0" VerticalAlignment="Top" Width="313" Click="SaveSettingsButton_Click"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="9,529,0,0" VerticalAlignment="Top" Width="560" Source="https://ggs.sx/downloads/jms.png" MouseDown="OnDonationPageClick"/>
+    </Grid>
+</Window>
