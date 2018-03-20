@@ -76,7 +76,7 @@ namespace JMS
             new List<string> {"*","139"},
             new List<string> {"9","147"},
             new List<string> {"(","156"},
-            new List<string> {"0","165"}, // Isn't being Phased properly by the regex. 
+            new List<string> {"0","165"},
             new List<string> {"q","175"},
             new List<string> {"Q","185"},
             new List<string> {"w","196"},
@@ -706,7 +706,7 @@ namespace JMS
                     {
                         int value = 0;
                         Int32.TryParse(match.Groups[1].ToString().Split(',')[0], out value);
-                        if (value <= 1000 && value != 0)
+                        if (value <= 2000 && value != 0)
                         {
                             currentMessage += message;
                         }
