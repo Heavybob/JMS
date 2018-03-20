@@ -53,6 +53,7 @@ namespace JMS
             {">(", "L O L"},
             //{"<3", "HARTEEEEEEEE﻿﻿﻿"},
             {":|", "CONfusION"},
+            {"bobheaJMS", "John Madden"},
             {"omg", "OOMG﻿"},
             {"[:hl]", "[:dv ap 10]"},
             {"[:tm]", "[:dv gv 65 pr 1 hs 130]"},
