@@ -55,8 +55,7 @@ namespace JMS
             {":|", "CONfusION"},
             {"omg", "OOMG﻿"},
             {"[:hl]", "[:dv ap 10]"},
-            {"[:sd]", "[:dv ap 10][:dv pr 1]"},
-            {"[:nv]", ""}
+            {"[:bp]", "[:dv gv 65 pr 1 hs 125]"}
         };
 
         public List<List<string>> tones = new List<List<string>> {
@@ -489,6 +488,7 @@ namespace JMS
                 case "stop":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
+                        e.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
@@ -506,6 +506,7 @@ namespace JMS
                 case "purge":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
+                        e.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
@@ -522,6 +523,7 @@ namespace JMS
                 case "nuke":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
+                        e.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
@@ -563,6 +565,7 @@ namespace JMS
                 e.ChatMessage.UserType == UserType.Broadcaster ||
                 e.ChatMessage.UserType == UserType.Admin ||
                 e.ChatMessage.UserType == UserType.GlobalModerator ||
+                e.ChatMessage.UserType == UserType.Staff ||
                 e.ChatMessage.IsModerator && GetModeratorsEnabled() ||
                 e.ChatMessage.Bits >= GetBitThreshold() && GetBitsEnabled() ||
                 e.ChatMessage.IsSubscriber && GetSubscribersEnabled() ||
