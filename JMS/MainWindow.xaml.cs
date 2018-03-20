@@ -56,6 +56,8 @@ namespace JMS
             {"bobheaJMS", "John Madden"},
             {"omg", "OOMG﻿"},
             {"[:hl]", "[:dv ap 10]"},
+            {"[:sv]", "[:dv ap 900]"},
+            {"[:sm]", "[:dv pr 500]"},
             {"[:tm]", "[:dv gv 65 pr 1 hs 130]"},
             {"[:bp]", "[:dv gv 65 pr 1 hs 125]"}
         };
