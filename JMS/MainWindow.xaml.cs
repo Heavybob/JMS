@@ -55,6 +55,7 @@ namespace JMS
             {":|", "CONfusION"},
             {"omg", "OOMG﻿"},
             {"[:hl]", "[:dv ap 10]"},
+            {"[:tm]", "[:dv gv 65 pr 1 hs 130]"},
             {"[:bp]", "[:dv gv 65 pr 1 hs 125]"}
         };
 
@@ -488,7 +489,7 @@ namespace JMS
                 case "stop":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
-                        e.ChatMessage.UserType == UserType.Staff ||
+                        e.Command.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
@@ -506,7 +507,7 @@ namespace JMS
                 case "purge":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
-                        e.ChatMessage.UserType == UserType.Staff ||
+                        e.Command.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
@@ -523,7 +524,7 @@ namespace JMS
                 case "nuke":
                     if (e.Command.ChatMessage.UserType == UserType.Broadcaster ||
                         e.Command.ChatMessage.UserType == UserType.Admin ||
-                        e.ChatMessage.UserType == UserType.Staff ||
+                        e.Command.ChatMessage.UserType == UserType.Staff ||
                         e.Command.ChatMessage.UserType == UserType.GlobalModerator ||
                         e.Command.ChatMessage.IsModerator)
                     {
