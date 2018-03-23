@@ -38,6 +38,7 @@ namespace JMS
         public string lastChatMessage = "";
         public string queuedMessage = "";
         public string[,] filter = {
+            // Emotes
             {":)", "Happy Face"},
             {":D", "Extremely Happy Face"},
             {":(", "Sad Face"},
@@ -53,8 +54,13 @@ namespace JMS
             {">(", "L O L"},
             //{"<3", "HARTEEEEEEEE﻿﻿﻿"},
             {":|", "CONfusION"},
-            {"bobheaJMS", "John Madden"},
             {"omg", "OOMG﻿"},
+            // Channel Emotes
+            {"bobheaJMS", "John Madden"},
+            {"clawRM", "RIGGED"},
+            {"useles2Duck", "Useless Duck Company"},
+            {"SnickersHype", "hype"}, // Had to block this because it sounds like nigger hype
+            // Voices
             {"[:hl]", "[:dv ap 10]"},
             {"[:sv]", "[:dv ap 900]"},
             {"[:sm]", "[:dv pr 500]"},
