@@ -54,7 +54,7 @@ namespace JMS
             {">(", "L O L"},
             //{"<3", "HARTEEEEEEEE﻿﻿﻿"},
             {":|", "CONfusION"},
-            {"omg", "OOMG﻿"},
+            //{"omg", "OOMG﻿"},
             // Channel Emotes
             {"bobheaJMS", "John Madden"},
             {"clawRM", "RIGGED"},
