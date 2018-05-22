@@ -101,17 +101,13 @@ body {
         top: 0px;
         left: 0px;
         background-color: #000;
-        background: linear-gradient(#fff 50%, #000 50%);
+        background: linear-gradient(#fff 30%, #000 0%);
         background-size: 100% 4px;
         background-repeat: repeat-y;
         opacity: .14;
         box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, .8);
         border-radius: 20px;
         z-index: 10;
-        -webkit-animation: pulse 5s linear infinite;
-        -moz-animation: pulse 5s linear infinite;
-        -ms-animation: pulse 5s linear infinite;
-        animation: pulse 5s linear infinite;
     }
 
     #screen:after {
@@ -169,10 +165,6 @@ body {
     -moz-transform: perspective(200px) rotateX(.5deg) skewX(2deg) scale(1.03);
     transform-origin: 50% 50%;
     transform: perspective(200px) rotateX(.5deg) skewX(2deg) scale(1.03);
-    -webkit-animation: glitch 1s linear infinite;
-    -moz-animation: glitch 1s linear infinite;
-    -ms-animation: glitch 1s linear infinite;
-    animation: glitch 1s linear infinite;
     opacity: .9;
 }
 
@@ -233,10 +225,6 @@ body {
         opacity: .01;
         -webkit-transform-origin: 50% 50%;
         -webkit-transform: perspective(1280px) skewX(3deg);
-        -webkit-animation: vline 1.25s linear infinite;
-        -moz-animation: vline 1.25s linear infinite;
-        -ms-animation: vline 1.25s linear infinite;
-        animation: vline 1.25s linear infinite;
     }
 
     #overlay:after {
@@ -290,10 +278,6 @@ body {
     -webkit-transform: perspective(200px) skewX(.5deg);
     -moz-transform-origin: 50% 50%;
     -moz-transform: perspective(200px) skewX(.5deg);
-    -webkit-animation: shifter 5s linear infinite;
-    -moz-animation: shifter 5s linear infinite;
-    -ms-animation: shifter 5s linear infinite;
-    animation: shifter 5s linear infinite;
 }
 
     #output:after {
