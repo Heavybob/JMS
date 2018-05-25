@@ -4,5 +4,8 @@
 
 Requires .NET Framework 4.7.2
 
+OAuth Key
+https://twitchapps.com/tmi/
+
 Utilities TwitchLIB
 https://github.com/TwitchLib/TwitchLib
