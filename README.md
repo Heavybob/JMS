@@ -4,7 +4,7 @@ JMS is a text to speech bot for twitch chat for streamers.
 
 ## This page needs to be updated however this is the first release of JMS to the public to play around with
 ## If you'd like to submit updates or changes to the code, you are welcome to do so. 
-## Created for use on https://twitch.tv/heavybob however open for anyone to tinker with. 
+Created for use on https://twitch.tv/heavybob however open for anyone to tinker with. 
 
 Features
 - Dectalk Voice Module
