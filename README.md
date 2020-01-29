@@ -4,10 +4,10 @@
 ## Created for use for https://twitch.tv/heavybob
 
 #Features
-> Dectalk Voice Module
-> Virtual Piano Support
-> Tone Generation and Piano Support
-> TwitchLib support for bits, subs and mods. 
+- Dectalk Voice Module
+- Virtual Piano Support
+- Tone Generation and Piano Support
+- TwitchLib support for bits, subs and mods. 
 
 Requires .NET Framework 4.7.2
 
