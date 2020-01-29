@@ -3,6 +3,12 @@
 ## If you'd like to submit updates or changes to the code, you are welcome to do so. 
 ## Created for use for https://twitch.tv/heavybob
 
+#Features
+> Dectalk Voice Module
+> Virtual Piano Support
+> Tone Generation and Piano Support
+> TwitchLib support for bits, subs and mods. 
+
 Requires .NET Framework 4.7.2
 
 OAuth Key
